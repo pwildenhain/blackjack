@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "C:\\Users\\wildenhaip\\.virtualenvs\\blackjack-GJ1uV3v1\\Scripts\\python.exe",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "black",
+    "editor.formatOnSave": true
+}
