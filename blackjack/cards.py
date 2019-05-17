@@ -22,6 +22,8 @@ class Card:
         card_grid = [[" " for _ in range(7)] for _ in range(5)]
         card_grid[0][0] = self.face
         card_grid[1][0] = self.symbol
+        # Picture will only be added for J, Q, K
+        card_grid[2][3] = CARD_FACE_DICT.get(self.face).get("picture", " ")
         card_grid[3][6] = self.symbol
         card_grid[4][6] = self.face
         return card_grid
@@ -30,6 +32,8 @@ class Card:
         """Fill out the card grid according to given symbol coordinates"""
         card_grid = self._create_card_grid()
         symbol_coords = CARD_FACE_DICT.get(self.face).get("coords")
+        if not symbol_coords:
+            return card_grid
 
         for layer, position in symbol_coords:
             card_grid[layer][position] = self.symbol

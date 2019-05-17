@@ -20,7 +20,7 @@ CARD_FACE_DICT = {
     "8": {"value": 8, "coords": [()]},
     "9": {"value": 9, "coords": [()]},
     "10": {"value": 10, "coords": [()]},
-    "J": {"value": 10, "coords": [()], "picture": "\u2694"},
-    "Q": {"value": 10, "coords": [()], "picture": "\u265B"},
-    "K": {"value": 10, "coords": [()], "picture": "\u265A"},
+    "J": {"value": 10, "picture": "\u2694"},
+    "Q": {"value": 10, "picture": "\u265B"},
+    "K": {"value": 10, "picture": "\u265A"},
 }
