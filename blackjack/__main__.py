@@ -1,11 +1,11 @@
-from blackjack import cards
+from blackjack import cards, cards_config
 
-
-def main():
-    card = cards.Card("A", "spades")
-    str(card)
-    print(card)
-
+suits = cards_config.SUIT_SYMBOL_DICT.keys()
+# faces = card_config.CARD_FACE_DICT.keys()
+faces = ["2"]
+# Going to need a hand_grid variable for printing out the entire hand
+full_deck = [(face, suit) for face in faces for suit in suits]
 
 if __name__ == "__main__":
-    main()
+    for face, suit in full_deck:
+        print(cards.Card(face, suit))
