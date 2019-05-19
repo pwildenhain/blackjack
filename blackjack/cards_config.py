@@ -2,6 +2,8 @@
 
 from colorama import Fore, Back
 
+COLOR_RESET = Back.BLACK + Fore.WHITE
+
 SUIT_SYMBOL_DICT = {
     "diamonds": {"symbol": "\u2666", "style": Back.WHITE + Fore.RED},
     "hearts": {"symbol": "\u2665", "style": Back.WHITE + Fore.RED},

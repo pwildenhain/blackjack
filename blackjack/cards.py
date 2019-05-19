@@ -1,7 +1,7 @@
 """Create Card and Deck classes as well as module variables for card printing"""
 
 from colorama import init
-from blackjack.cards_config import SUIT_SYMBOL_DICT, CARD_FACE_DICT
+from blackjack.cards_config import SUIT_SYMBOL_DICT, CARD_FACE_DICT, COLOR_RESET
 
 # Change the color back to default after each print
 # Prevents user input from being colored
@@ -46,6 +46,7 @@ class Card:
         card_grid_plan = self._plan_card_grid()
 
         for layer in range(0, 5):
-            card_str += "\n" + "".join(card_grid_plan[layer])
+            card_str += f"\n{self.style}{''.join(card_grid_plan[layer])}"
+            card_str += COLOR_RESET
 
-        return self.style + card_str
+        return card_str
