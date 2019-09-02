@@ -1,11 +1,21 @@
-from blackjack import cards, cards_config
+"""Play blackjack in the terminal"""
 
-suits = cards_config.SUIT_SYMBOL_DICT.keys()
-# faces = card_config.CARD_FACE_DICT.keys()
-faces = ["2"]
-# Going to need a hand_grid variable for printing out the entire hand
-full_deck = [(face, suit) for face in faces for suit in suits]
+from terminal_playing_cards import Deck, View
+from blackjack.roles import Role
 
-if __name__ == "__main__":
-    for face, suit in full_deck:
-        print(cards.Card(face, suit))
+print("*Starting Game*")
+
+DECK = Deck(specifications=["face_cards_are_ten"])
+DECK.shuffle()
+
+EX_PLAYER = Role(hand=View([DECK.pop() for _ in range(2)]))
+
+while EX_PLAYER.total < 21:
+    EX_PLAYER.show_hand()
+    print(f"The hand total is {EX_PLAYER.total}")
+    EX_PLAYER.hit(card=DECK.pop())
+    print("*Hit Me!*")
+
+print(f"Final hand of {EX_PLAYER.total} is:")
+
+EX_PLAYER.show_hand()
