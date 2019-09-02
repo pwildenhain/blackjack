@@ -9,7 +9,7 @@ pylint = "*"
 pytest = "*"
 
 [packages]
-colorama = "*"
+terminal-playing-cards = "*"
 
 [requires]
 python_version = "3.6"
