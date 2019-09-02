@@ -1,6 +1,8 @@
 """"All global configuration options for a the Card class"""
 
-from colorama import Fore, Back
+from colorama import Fore, Back, Style
+
+COLOR_RESET = Style.RESET_ALL
 
 SUIT_SYMBOL_DICT = {
     "diamonds": {"symbol": "\u2666", "style": Back.WHITE + Fore.RED},
