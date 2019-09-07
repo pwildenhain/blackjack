@@ -21,10 +21,6 @@ class Role:
         self.set_ace_value()
         self.total = sum(hand)
 
-    def show_hand(self) -> None:
-        """Print the hand in the terminal."""
-        print(self.hand)
-
     def set_ace_value(self) -> None:
         """Re-evaluate the current value for an ace"""
         for card in self.hand:
