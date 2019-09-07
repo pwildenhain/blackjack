@@ -11,11 +11,11 @@ DECK.shuffle()
 EX_PLAYER = Role(hand=View([DECK.pop() for _ in range(2)]))
 
 while EX_PLAYER.total < 21:
-    EX_PLAYER.show_hand()
+    print(EX_PLAYER.hand)
     print(f"The hand total is {EX_PLAYER.total}")
     EX_PLAYER.hit(card=DECK.pop())
     print("*Hit Me!*")
 
 print(f"Final hand of {EX_PLAYER.total} is:")
 
-EX_PLAYER.show_hand()
+print(EX_PLAYER.hand)
