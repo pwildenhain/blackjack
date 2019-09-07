@@ -17,22 +17,23 @@ class Role:
     def __init__(self, hand: View):
         """Set up the role, and calculate the blackjack hand starting total."""
         self.hand = hand
-        # Evaluate possisble aces before setting total
-        self.set_ace_values()
+        # Evaluate possible aces before setting total
+        self.set_ace_value()
         self.total = sum(hand)
 
     def show_hand(self) -> None:
         """Print the hand in the terminal."""
         print(self.hand)
 
-    def set_ace_values(self) -> None:
-        """Re-evaluate the current values for aces"""
+    def set_ace_value(self) -> None:
+        """Re-evaluate the current value for an ace"""
         for card in self.hand:
             if card.face == "A":
                 card.value = 11 if sum(self.hand) + 10 <= 21 else 1
+                break
 
     def hit(self, card: Card) -> None:
         """Add a card to the hand from the deck. Recalculate the hand total."""
         self.hand += [card]
-        self.set_ace_values()
+        self.set_ace_value()
         self.total = sum(self.hand)
