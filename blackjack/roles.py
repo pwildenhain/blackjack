@@ -15,10 +15,11 @@ class Role:
     """
 
     def __init__(self, hand: View = None):
-        """Set up the role, and calculate the blackjack hand starting total."""
+        """Set up the role, with an optional hand attribute"""
+        # Set the total before the hand, because the hand can change the total
+        self.total = None
         self._hand = None
         self.hand = hand
-        self.total = None
 
     @property
     # pylint: disable=missing-docstring
