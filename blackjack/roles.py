@@ -24,24 +24,13 @@ class Role:
         return self._hand
 
     @hand.setter
-    def hand(self, value: Union[Card, View]):
-        """Recalculate the total each time a Card/View is added to the hand"""
+    def hand(self, value: View):
+        """Calculate the total when a View is added to the hand"""
         # Skip setting if the hand is empty
         if not value:
             return None
 
-        if isinstance(value, View):
-            self._hand = value
-        elif isinstance(value, Card):
-            self._hand += [value]
-        elif self._hand:
-            raise NotImplementedError(
-                f"""
-            The Role.hand attribute only accepts a Card or View object,
-            not: '{type(value)}'
-            """
-            )
-
+        self._hand = value
         self.set_ace_value()
         self.total = sum(self._hand)
 
