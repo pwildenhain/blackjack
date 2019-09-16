@@ -1,5 +1,9 @@
 """Test the roles module, including base class, player, and dealer"""
-
+# The test function name is the docstring
+# pylint: disable=missing-docstring
+# Disable this pylint rule because of a conflict with @pytest.fixture
+# See: stackoverflow.com/questions/46089480/pytest-fixtures-redefining-name-from-outer-scope-pylint
+# pylint: disable=redefined-outer-name
 import pytest
 from blackjack.roles import Role
 
@@ -49,6 +53,7 @@ def test_role_can_be_created_without_cards():
 
 def test_hand_can_be_set_after_role_creation(queen_spades):
     from terminal_playing_cards import View
+
     role = Role()
     role.hand = View([queen_spades, queen_spades])
     assert role.total == 20
