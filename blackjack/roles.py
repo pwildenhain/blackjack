@@ -1,7 +1,7 @@
 """Roles for playing blackjack.
 Includes base class, with player and dealer implementation.
 """
-
+from typing import Union
 from terminal_playing_cards import View, Card
 
 
@@ -14,12 +14,36 @@ class Role:
         total: Total score for current hand of blackjack.
     """
 
-    def __init__(self, hand: View):
+    def __init__(self, hand: View = None):
         """Set up the role, and calculate the blackjack hand starting total."""
+        self._hand = None
         self.hand = hand
-        # Evaluate possible aces before setting total
+
+    @property
+    def hand(self):
+        return self._hand
+
+    @hand.setter
+    def hand(self, value: Union[Card, View]):
+        """Recalculate the total each time a Card/View is added to the hand"""
+        # Skip setting if the hand is empty
+        if not value:
+            return None
+
+        if isinstance(value, View):
+            self._hand = value
+        elif isinstance(value, Card):
+            self._hand += [value]
+        elif self._hand:
+            raise NotImplementedError(
+                f"""
+            The Role.hand attribute only accepts a Card or View object,
+            not: '{type(value)}'
+            """
+            )
+
         self.set_ace_value()
-        self.total = sum(hand)
+        self.total = sum(self._hand)
 
     def set_ace_value(self) -> None:
         """Re-evaluate the current value for an ace"""
