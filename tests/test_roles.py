@@ -44,7 +44,7 @@ def test_hit_method_adjusts_ace_value(ace_hand, queen_spades):
 
 def test_role_can_be_created_without_cards():
     role = Role()
-    assert isinstance(role, "Role")
+    assert isinstance(role, Role)
 
 
 def test_hand_can_be_set_after_role_creation(queen_spades):
