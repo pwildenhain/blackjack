@@ -54,13 +54,13 @@ class Role:
 class Dealer(Role):
     """Dealer in a blackjack game. This class does **not**
     run the whole game, like in the real word. Rather it's
-    an simple implementation of a Role.
+    a simple implementation of Role.
     """
 
     def play(self, deck: Deck):
         """Follow the strict rules of how a dealer is supposed to play
-        blackjack. This includes unhiding the first card in it's hand
-        and only playing until it hits 17 or above.
+        blackjack. This includes unhiding the first card in the hand
+        and only playing until the total hits 17 or above.
         """
         self.hand[0].hidden = False
 
