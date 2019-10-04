@@ -5,7 +5,7 @@
 # See: stackoverflow.com/questions/46089480/pytest-fixtures-redefining-name-from-outer-scope-pylint
 # pylint: disable=redefined-outer-name
 import pytest
-from blackjack.roles import Role, Dealer
+from blackjack.roles import Role, Dealer, Player
 
 
 @pytest.fixture
@@ -96,3 +96,18 @@ def test_dealer_stops_playing_over_seventeen(custom_deck, non_ace_hand):
 
     assert dealer.total == 18
     assert len(dealer.hand) == 4
+
+
+def test_player_can_be_created_without_attrs():
+    player = Player()
+    assert isinstance(player, Player)
+
+
+def test_choose_move_returns_correct_string(mocker):
+    player = Player()
+    mocker.patch("blackjack.roles.input", side_effect=[0, 1])
+    first_move = player.choose_move()
+    second_move = player.choose_move()
+
+    assert first_move == "hit"
+    assert second_move == "stay"
