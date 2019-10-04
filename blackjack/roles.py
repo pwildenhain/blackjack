@@ -66,3 +66,28 @@ class Dealer(Role):
 
         while self.total < 17:
             self.hit(card=deck.pop())
+
+
+class Player(Role):
+    """A player in a blackjack game. This class is 
+    given options as to what to do when it plays. It
+    also has a bank that keeps track of it's money, 
+    and stores the bet that the player made
+    """
+
+    def __init__(self, hand: View = None, bank: int = None, bet: int = None):
+        """Store the bank roll, current bet, and moves of the player"""
+        super().__init__(hand=hand)
+        self.bank = bank
+        self.bet = bet
+        self.moves = {0: "hit", 1: "stay"}
+
+    def choose_move(self):
+        """Allow the player to choose which move to take from the moves attribute"""
+        user_choice = ""
+        while user_choice not in self.moves.keys():
+            for choice, move in self.moves.items():
+                print(f"{choice}: {move.title()}")
+            user_choice = input("Choose a move: ")
+
+        return self.moves.get(user_choice)
