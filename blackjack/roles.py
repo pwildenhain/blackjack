@@ -69,9 +69,9 @@ class Dealer(Role):
 
 
 class Player(Role):
-    """A player in a blackjack game. This class is 
+    """A player in a blackjack game. This class is
     given options as to what to do when it plays. It
-    also has a bank that keeps track of it's money, 
+    also has a bank that keeps track of it's money,
     and stores the bet that the player made
     """
 
