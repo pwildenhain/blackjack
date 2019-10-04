@@ -8,6 +8,7 @@ black = "==18.9b0"
 pylint = "*"
 pytest = "*"
 pytest-cov = "*"
+pytest-mock = "*"
 
 [packages]
 terminal-playing-cards = "*"
