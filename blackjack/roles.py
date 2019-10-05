@@ -103,7 +103,7 @@ class Player(Role):
         a move until bust or blackjack
         """
         if self.total == 21:
-            return ()
+            return None
         keep_playing = self.choose_move() == "hit"
         while keep_playing:
             self.hit(card=deck.pop())
