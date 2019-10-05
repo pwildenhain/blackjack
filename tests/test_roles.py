@@ -112,6 +112,15 @@ def test_choose_move_returns_correct_string(mocker):
     assert second_move == "stay"
 
 
+def test_choose_move_doesnt_allow_bad_input(mocker):
+    player = Player()
+    moves_mock = mocker.patch("blackjack.roles.input", side_effect=["a", 5, 0])
+    move = player.choose_move()
+    # Should keep calling "input()" until valid input is received
+    assert moves_mock.call_count == 3
+    assert move == "hit"
+
+
 def test_player_cant_play_with_blackjack(mocker, ace_hand, custom_deck):
     player = Player(hand=ace_hand)
 
