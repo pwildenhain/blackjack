@@ -96,3 +96,18 @@ class Player(Role):
                 continue
 
         return self.moves.get(user_choice)
+
+    def play(self, deck: Deck):
+        """If a player doesn't have blackjack, allow them to choose
+        their move and calculate and new hand total. Keep asking for
+        a move until bust or blackjack
+        """
+        if self.total == 21:
+            return ()
+        keep_playing = self.choose_move() == "hit"
+        while keep_playing:
+            self.hit(card=deck.pop())
+            print(self.hand)
+            if self.total >= 21:
+                break
+            keep_playing = self.choose_move() == "hit"
