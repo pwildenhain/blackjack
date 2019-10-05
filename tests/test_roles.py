@@ -138,7 +138,7 @@ def test_player_cant_play_with_gt_twentyone(mocker, non_ace_hand, custom_deck):
     player.play(deck=custom_deck)
     # Should not have been given the option to hit a fourth time
     # because total is a bust
-    mock_moves.call_count == 3
+    assert mock_moves.call_count == 3
     assert player.total == 28
 
 
@@ -150,5 +150,5 @@ def test_player_is_allowed_to_stay(mocker, non_ace_hand, custom_deck):
     )
     player.play(deck=custom_deck)
     # Should have stoppped choosing moves after "stay"
-    mock_moves.call_count == 2
+    assert mock_moves.call_count == 2
     assert player.total == 16
