@@ -66,6 +66,7 @@ class Dealer(Role):
 
         while self.total < 17:
             self.hit(card=deck.pop())
+            print(self.hand)
 
 
 class Player(Role):
