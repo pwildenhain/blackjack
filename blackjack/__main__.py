@@ -1,21 +1,36 @@
 """Play blackjack in the terminal"""
 
 from terminal_playing_cards import Deck, View
-from blackjack.roles import Role
+from blackjack.roles import Dealer, Player
 
 print("*Starting Game*")
 
 DECK = Deck(specifications=["face_cards_are_ten"])
 DECK.shuffle()
 
-EX_PLAYER = Role(hand=View([DECK.pop() for _ in range(2)]))
+DEALER = Dealer(hand=View([DECK.pop() for _ in range(2)]))
+DEALER.hand[0].hidden = True
+PLAYER = Player(hand=View([DECK.pop() for _ in range(2)]))
+print("Dealer has:")
+print(DEALER.hand)
+print("Player has:")
+print(PLAYER.hand)
+for role in [PLAYER, DEALER]:
+    role_name = role.__class__.__name__
+    print(f"Begin {role_name}'s turn")
+    role.play(deck=DECK)
+    print(f"{role_name} final hand:")
+    print(role.hand)
 
-while EX_PLAYER.total < 21:
-    print(EX_PLAYER.hand)
-    print(f"The hand total is {EX_PLAYER.total}")
-    EX_PLAYER.hit(card=DECK.pop())
-    print("*Hit Me!*")
+if PLAYER.total > 21:
+    WINNER = "dealer"
+elif DEALER.total > 21:
+    WINNER = "player"
+elif DEALER.total > PLAYER.total:
+    WINNER = "dealer"
+elif PLAYER.total > DEALER.total:
+    WINNER = "player"
+else:
+    WINNER = "no one"
 
-print(f"Final hand of {EX_PLAYER.total} is:")
-
-print(EX_PLAYER.hand)
+print(f"{WINNER.title()} is the winner")
