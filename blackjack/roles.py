@@ -88,6 +88,10 @@ class Player(Role):
         while user_choice not in self.moves.keys():
             for choice, move in self.moves.items():
                 print(f"{choice}: {move.title()}")
-            user_choice = input("Choose a move: ")
+            try:
+                user_choice = int(input("Choose a move: "))
+            except ValueError:
+                print("Numbers only please :-)")
+                continue
 
         return self.moves.get(user_choice)
