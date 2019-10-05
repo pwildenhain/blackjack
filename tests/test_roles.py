@@ -46,7 +46,12 @@ def custom_deck():
     """
     from terminal_playing_cards import Deck
 
-    custom_spec = {"A": {"clubs": 1}, "2": {"clubs": 2}}
+    custom_spec = {
+        "A": {"clubs": 1},
+        "2": {"clubs": 2},
+        "J": {"clubs": 10},
+        "3": {"clubs": 3},
+    }
 
     return Deck(specifications=custom_spec)
 
@@ -111,3 +116,39 @@ def test_choose_move_returns_correct_string(mocker):
 
     assert first_move == "hit"
     assert second_move == "stay"
+
+
+def test_player_cant_play_with_blackjack(mocker, ace_hand, custom_deck):
+    player = Player(hand=ace_hand)
+
+    mock_moves = mocker.patch("blackjack.roles.Player.choose_move", side_effect=["hit"])
+    player.play(deck=custom_deck)
+    # Should not have been given the option to choose since move
+    # since the hand total is already blackjack
+    mock_moves.assert_not_called()
+    assert player.total == 21
+
+
+def test_player_cant_play_with_gt_twentyone(mocker, non_ace_hand, custom_deck):
+    player = Player(hand=non_ace_hand)
+
+    mock_moves = mocker.patch(
+        "blackjack.roles.Player.choose_move", side_effect=["hit", "hit", "hit", "hit"]
+    )
+    player.play(deck=custom_deck)
+    # Should not have been given the option to hit a fourth time
+    # because total is a bust
+    mock_moves.call_count == 3
+    assert player.total == 28
+
+
+def test_player_is_allowed_to_stay(mocker, non_ace_hand, custom_deck):
+    player = Player(hand=non_ace_hand)
+
+    mock_moves = mocker.patch(
+        "blackjack.roles.Player.choose_move", side_effect=["hit", "stay", "hit"]
+    )
+    player.play(deck=custom_deck)
+    # Should have stoppped choosing moves after "stay"
+    mock_moves.call_count == 2
+    assert player.total == 16
