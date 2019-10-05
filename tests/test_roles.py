@@ -23,16 +23,6 @@ def ace_hand():
 
 
 @pytest.fixture
-def role_without_ace(non_ace_hand):
-    return Role(hand=non_ace_hand)
-
-
-@pytest.fixture
-def role_with_ace(ace_hand):
-    return Role(hand=ace_hand)
-
-
-@pytest.fixture
 def queen_spades():
     from terminal_playing_cards import Card
 
@@ -56,19 +46,23 @@ def custom_deck():
     return Deck(specifications=custom_spec)
 
 
-def test_hand_total_value(role_without_ace, role_with_ace):
+def test_hand_total_value(non_ace_hand, ace_hand):
+    role_without_ace = Role(hand=non_ace_hand)
+    role_with_ace = Role(hand=ace_hand)
     assert role_without_ace.total == 15
     assert role_with_ace.total == 21
 
 
-def test_hit_method_adds_to_total(role_without_ace, queen_spades):
-    role_without_ace.hit(card=queen_spades)
-    assert role_without_ace.total == 25
+def test_hit_method_adds_to_total(non_ace_hand, queen_spades):
+    role = Role(hand=non_ace_hand)
+    role.hit(card=queen_spades)
+    assert role.total == 25
 
 
-def test_hit_method_adjusts_ace_value(role_with_ace, queen_spades):
-    role_with_ace.hit(card=queen_spades)
-    assert role_with_ace.total == 21
+def test_hit_method_adjusts_ace_value(ace_hand, queen_spades):
+    role = Role(hand=ace_hand)
+    role.hit(card=queen_spades)
+    assert role.total == 21
 
 
 def test_role_can_be_created_without_cards():
