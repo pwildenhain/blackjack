@@ -4,7 +4,7 @@ parameters.
 """
 
 from typing import List
-from terminal_playing_cards import Deck
+from terminal_playing_cards import Deck, View
 from blackjack.roles import Dealer, Player
 
 
@@ -71,3 +71,9 @@ class Blackjack:
                     break
 
             player.bet = user_bet
+
+    def deal(self):
+        """Deal cards for a blackjack round. Hide the Dealer's second card"""
+        for role in self.players + [self.dealer]:
+            role.hand = View([self.deck.pop() for _ in range(2)])
+        self.dealer.hand[1].hidden = True
