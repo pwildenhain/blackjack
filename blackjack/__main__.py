@@ -1,6 +1,6 @@
 """Play blackjack in the terminal"""
 
-from terminal_playing_cards import Deck, View
+from terminal_playing_cards import Deck
 from blackjack.game import Blackjack
 from blackjack.roles import Dealer, Player
 
@@ -9,9 +9,7 @@ print("*Starting Game*")
 DECK = Deck(specifications=["face_cards_are_ten"])
 DECK.shuffle()
 
-BLACKJACK_GAME = Blackjack(
-    deck=DECK, dealer=Dealer(), players=[Player(bank=500)]
-)
+BLACKJACK_GAME = Blackjack(deck=DECK, dealer=Dealer(), players=[Player(bank=500)])
 
 BLACKJACK_GAME.take_bets()
 
