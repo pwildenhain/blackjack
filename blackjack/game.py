@@ -66,7 +66,6 @@ class Blackjack:
                     for message in bet_check_messages:
                         print(f"* {message}")
                     print("Please try again.")
-                    continue
                 else:
                     break
 
