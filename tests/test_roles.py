@@ -80,12 +80,12 @@ def test_hand_can_be_set_after_role_creation(queen_spades):
 
 def test_dealer_unhides_card_when_playing(custom_deck, ace_hand):
     # Mimic how cards are dealt in Blackjack class
-    ace_hand[0].hidden = True
+    ace_hand[1].hidden = True
     dealer = Dealer(hand=ace_hand)
 
     dealer.play(deck=custom_deck)
 
-    assert not dealer.hand[0].hidden
+    assert not dealer.hand[1].hidden
 
 
 def test_dealer_stops_playing_over_seventeen(custom_deck, non_ace_hand):

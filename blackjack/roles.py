@@ -59,10 +59,10 @@ class Dealer(Role):
 
     def play(self, deck: Deck):
         """Follow the strict rules of how a dealer is supposed to play
-        blackjack. This includes unhiding the first card in the hand
+        blackjack. This includes unhiding the second card in the hand
         and only playing until the total hits 17 or above.
         """
-        self.hand[0].hidden = False
+        self.hand[1].hidden = False
 
         while self.total < 17:
             self.hit(card=deck.pop())
