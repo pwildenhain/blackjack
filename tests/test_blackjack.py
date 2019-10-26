@@ -9,12 +9,12 @@ from blackjack.game import Blackjack
 
 
 @pytest.fixture
-def new_blackjack_game():
+def new_blackjack_game(): 
     from terminal_playing_cards import Deck
     from blackjack.roles import Player, Dealer
 
     return Blackjack(
-        deck=Deck(hidden=True),
+        deck=Deck(),
         dealer=Dealer(),
         players=[Player(bank=500), Player(bank=500)],
     )
