@@ -76,3 +76,29 @@ class Blackjack:
         for role in self.players + [self.dealer]:
             role.hand = View([self.deck.pop() for _ in range(2)])
         self.dealer.hand[1].hidden = True
+
+    def play_round(self):
+        self.take_bets()
+        self.deal()
+
+        for role in self.players + [self.dealer]:
+            role_name = role.__class__.__name__
+            print(f"{role_name}'s hand:")
+            print(role.hand)
+
+        for role in self.players + [self.dealer]:
+            role_name = role.__class__.__name__
+            print(f"Begin {role_name}'s turn")
+            role.play(deck=self.deck)
+            print(f"{role_name} final hand:")
+            print(role.hand)
+
+        for player in self.players:
+            if player.total > 21:
+                player.bank -= player.bet
+            elif self.dealer.total > 21:
+                player.bank += player.bet
+            elif player.total < self.dealer.total:
+                player.bank -= player.bet
+            elif player.total > self.dealer.total:
+                player.bank += player.bet
