@@ -41,6 +41,11 @@ def custom_deck():
         "2": {"clubs": 2},
         "J": {"clubs": 10},
         "3": {"clubs": 3},
+        "4": {"clubs": 4},
+        "K": {"clubs": 10},
+        "8": {"clubs": 8},
+        "Q": {"clubs": 10},
+        "5": {"clubs": 5},
     }
 
     return Deck(specifications=custom_spec)
