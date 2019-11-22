@@ -6,6 +6,7 @@
 # pylint: disable=redefined-outer-name
 import pytest
 from blackjack.game import Blackjack
+from tests.test_roles import custom_deck
 
 
 @pytest.fixture
@@ -16,6 +17,13 @@ def new_blackjack_game():
     return Blackjack(
         deck=Deck(), dealer=Dealer(), players=[Player(bank=500), Player(bank=500)]
     )
+
+
+@pytest.fixture
+def fixed_blackjack_game(new_blackjack_game, custom_deck):
+    new_blackjack_game.deck = custom_deck
+
+    return new_blackjack_game
 
 
 def test_taking_and_storing_player_bets(new_blackjack_game, mocker):
@@ -75,3 +83,52 @@ def test_dealer_second_card_is_hidden(new_blackjack_game):
 
     assert not dealer_hand[0].hidden
     assert dealer_hand[1].hidden
+
+
+def test_one_player_wins_and_player_loses_bet(fixed_blackjack_game, mocker):
+    # Mock out input calls for self.take_bets()
+    mocker.patch("blackjack.game.input", side_effect=["100", "200"])
+    mocker.patch("blackjack.roles.Player.choose_move", side_effect=["hit", "hit"])
+    fixed_blackjack_game.play_round()
+
+    assert fixed_blackjack_game.players[0].bank == 600
+    assert fixed_blackjack_game.players[1].bank == 300
+    # Assert players deserved to win/lose bets
+    assert (
+        21 >= fixed_blackjack_game.players[0].total > fixed_blackjack_game.dealer.total
+    )
+    assert fixed_blackjack_game.players[1].total > 21
+
+
+def test_players_win_bet_because_dealer_busts(fixed_blackjack_game, mocker):
+    mocker.patch("blackjack.game.input", side_effect=["100", "200"])
+    mocker.patch("blackjack.roles.Player.choose_move", side_effect=["stay", "stay"])
+    fixed_blackjack_game.play_round()
+
+    assert fixed_blackjack_game.players[0].bank == 600
+    assert fixed_blackjack_game.players[1].bank == 700
+    assert fixed_blackjack_game.dealer.total > 21
+
+
+def test_no_one_wins_blackjack_round(new_blackjack_game, mocker):
+    from terminal_playing_cards import Card
+
+    # Ensure that all roles get 21
+    custom_cards = [
+        Card("A", "clubs", value=1),
+        Card("K", "clubs", value=10),
+        Card("A", "clubs", value=1),
+        Card("K", "clubs", value=10),
+        Card("A", "clubs", value=1),
+        Card("K", "clubs", value=10),
+    ]
+
+    new_blackjack_game.deck = custom_cards
+    mocker.patch("blackjack.game.input", side_effect=["100", "200"])
+    new_blackjack_game.play_round()
+
+    assert new_blackjack_game.players[0].bank == 500
+    assert new_blackjack_game.players[1].bank == 500
+
+
+# Still missing one more edge case that needs to be tested
