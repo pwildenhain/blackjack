@@ -6,35 +6,33 @@ from blackjack.roles import Dealer, Player
 
 print("*Starting Game*")
 
-DECK = Deck(specifications=["face_cards_are_ten"])
-DECK.shuffle()
+while True:
+    try:
+        num_players = int(input("Number of players: "))
+        break
+    except ValueError:
+        print("Numbers only please :-)")
 
-BLACKJACK_GAME = Blackjack(deck=DECK, dealer=Dealer(), players=[Player(bank=500)])
+PLAYER_LIST = []
+for player_num in range(num_players):
+    name = input("Player name: ")
+    while True:
+        try:
+            bank = int(input(f"Starting bank roll for {name}: "))
+            if bank % 25 != 0:
+                print("Bank roll must be in increments of $25")
+                continue
+            break
+        except ValueError:
+            print("Numbers only please :-)")
+    PLAYER_LIST.append(Player(name=name, bank=bank))
 
-BLACKJACK_GAME.take_bets()
+BIG_DECK = Deck(specifications=["face_cards_are_ten"])
+for _ in range(5):
+    BIG_DECK += Deck(specifications=["face_cards_are_ten"])
 
-BLACKJACK_GAME.deal()
+BIG_DECK.shuffle()
 
-print("Dealer has:")
-print(BLACKJACK_GAME.dealer.hand)
-print("Player has:")
-print(BLACKJACK_GAME.players[0].hand)
-for role in [BLACKJACK_GAME.players[0], BLACKJACK_GAME.dealer]:
-    role_name = role.__class__.__name__
-    print(f"Begin {role_name}'s turn")
-    role.play(deck=DECK)
-    print(f"{role_name} final hand:")
-    print(role.hand)
+BLACKJACK_GAME = Blackjack(deck=BIG_DECK, dealer=Dealer(), players=PLAYER_LIST)
 
-if BLACKJACK_GAME.players[0].total > 21:
-    WINNER = "dealer"
-elif BLACKJACK_GAME.dealer.total > 21:
-    WINNER = "player"
-elif BLACKJACK_GAME.dealer.total > BLACKJACK_GAME.players[0].total:
-    WINNER = "dealer"
-elif BLACKJACK_GAME.players[0].total > BLACKJACK_GAME.dealer.total:
-    WINNER = "player"
-else:
-    WINNER = "no one"
-
-print(f"{WINNER.title()} won ${BLACKJACK_GAME.players[0].bet}")
+BLACKJACK_GAME.play_game()
