@@ -46,7 +46,7 @@ class Blackjack:
             bet_checks = self.bet_checks.copy()
             while True:
                 try:
-                    user_bet = int(input("Place bet: "))
+                    user_bet = int(input(f"Place bet (bank = ${player.bank}): "))
                 except ValueError:
                     print("Numbers only please :-)")
                     continue
