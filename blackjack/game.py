@@ -78,6 +78,7 @@ class Blackjack:
         self.dealer.hand[1].hidden = True
 
     def play_round(self):
+        """Play a single round of blackjack."""
         self.take_bets()
         self.deal()
 
@@ -107,3 +108,21 @@ class Blackjack:
             else:
                 print(f"{player.name} pushes ➡️")
 
+    def play_game(self):
+        """Start and continue to play rounds of blackjack until all players leave
+        or run out of money.
+        """
+        while True:
+            self.play_round()
+            for num, player in enumerate(self.players):
+                if player.bank == 0:
+                    print(f"Sorry {player.name}, you're out of money. Thanks for playing!")
+                    self.players.pop(num)
+                    break
+                play_again = input(f"Would {player.name} like to play again (y/n)? ")
+                if play_again == "n":
+                    print(f"Thanks for playing {player.name}! You're taking home ${player.bank} in winnings")
+                    self.players.pop(num)
+            if not self.players:
+                print("No players left in the game -- quitting")
+                break
