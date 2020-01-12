@@ -116,19 +116,25 @@ class Blackjack:
         """
         while True:
             self.play_round()
+            remove_list = []
             for num, player in enumerate(self.players):
                 if player.bank == 0:
                     print(
                         f"Sorry {player.name}, you're out of money. Thanks for playing!"
                     )
-                    self.players.pop(num)
-                    break
+                    remove_list += [num]
+                    continue
                 play_again = input(f"Would {player.name} like to play again (y/n)? ")
                 if play_again == "n":
                     print(
                         f"Thanks for playing {player.name}! You're taking home ${player.bank} in winnings"
                     )
-                    self.players.pop(num)
+                    remove_list += [num]
+            self.players = [
+                player
+                for num, player in enumerate(self.players)
+                if num not in remove_list
+            ]
             if not self.players:
                 print("No players left in the game -- quitting")
                 break
