@@ -93,12 +93,20 @@ class Blackjack:
             print(f"{role_name} final hand:")
             print(role.hand)
 
-        for player in self.players:
+        for num, player in enumerate(self.players):
+            player_num = f"Player {num + 1}"
             if player.total > 21:
                 player.bank -= player.bet
+                print(f"{player_num} busts 💥")
             elif self.dealer.total > 21:
                 player.bank += player.bet
+                print(f"{player_num} wins 💰")
             elif player.total < self.dealer.total:
                 player.bank -= player.bet
+                print(f"{player_num} loses 😭")
             elif player.total > self.dealer.total:
                 player.bank += player.bet
+                print(f"{player_num} wins 💰")
+            else:
+                print(f"{player_num} pushes ➡️")
+
