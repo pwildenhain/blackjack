@@ -110,6 +110,20 @@ def test_players_win_bet_because_dealer_busts(fixed_blackjack_game, mocker):
     assert fixed_blackjack_game.dealer.total > 21
 
 
+def test_dealer_total_beats_player_total(fixed_blackjack_game, mocker):
+    mocker.patch("blackjack.game.input", side_effect=["100", "200"])
+    mocker.patch("blackjack.roles.Player.choose_move", side_effect=["stay", "stay"])
+    # Pop out the next two cards in the deck, because they're designed to make the dealer bust
+    for _ in range(2):
+        fixed_blackjack_game.deck.pop()
+    
+    fixed_blackjack_game.play_round()
+
+    assert fixed_blackjack_game.players[0].bank == 400
+    assert fixed_blackjack_game.players[1].bank == 300
+    assert  21 >= fixed_blackjack_game.dealer.total > fixed_blackjack_game.players[0].total
+    assert  21 >= fixed_blackjack_game.dealer.total > fixed_blackjack_game.players[1].total
+
 def test_no_one_wins_blackjack_round(new_blackjack_game, mocker):
     from terminal_playing_cards import Card
 
@@ -129,6 +143,3 @@ def test_no_one_wins_blackjack_round(new_blackjack_game, mocker):
 
     assert new_blackjack_game.players[0].bank == 500
     assert new_blackjack_game.players[1].bank == 500
-
-
-# Still missing one more edge case that needs to be tested
