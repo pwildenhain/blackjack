@@ -46,7 +46,9 @@ class Blackjack:
             bet_checks = self.bet_checks.copy()
             while True:
                 try:
-                    user_bet = int(input(f"Place bet for {player.name} (bank = ${player.bank}): "))
+                    user_bet = int(
+                        input(f"Place bet for {player.name} (bank = ${player.bank}): ")
+                    )
                 except ValueError:
                     print("Numbers only please :-)")
                     continue
@@ -116,12 +118,16 @@ class Blackjack:
             self.play_round()
             for num, player in enumerate(self.players):
                 if player.bank == 0:
-                    print(f"Sorry {player.name}, you're out of money. Thanks for playing!")
+                    print(
+                        f"Sorry {player.name}, you're out of money. Thanks for playing!"
+                    )
                     self.players.pop(num)
                     break
                 play_again = input(f"Would {player.name} like to play again (y/n)? ")
                 if play_again == "n":
-                    print(f"Thanks for playing {player.name}! You're taking home ${player.bank} in winnings")
+                    print(
+                        f"Thanks for playing {player.name}! You're taking home ${player.bank} in winnings"
+                    )
                     self.players.pop(num)
             if not self.players:
                 print("No players left in the game -- quitting")

@@ -116,13 +116,18 @@ def test_dealer_total_beats_player_total(fixed_blackjack_game, mocker):
     # Pop out the next two cards in the deck, because they're designed to make the dealer bust
     for _ in range(2):
         fixed_blackjack_game.deck.pop()
-    
+
     fixed_blackjack_game.play_round()
 
     assert fixed_blackjack_game.players[0].bank == 400
     assert fixed_blackjack_game.players[1].bank == 300
-    assert  21 >= fixed_blackjack_game.dealer.total > fixed_blackjack_game.players[0].total
-    assert  21 >= fixed_blackjack_game.dealer.total > fixed_blackjack_game.players[1].total
+    assert (
+        21 >= fixed_blackjack_game.dealer.total > fixed_blackjack_game.players[0].total
+    )
+    assert (
+        21 >= fixed_blackjack_game.dealer.total > fixed_blackjack_game.players[1].total
+    )
+
 
 def test_no_one_wins_blackjack_round(new_blackjack_game, mocker):
     from terminal_playing_cards import Card
