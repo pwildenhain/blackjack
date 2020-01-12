@@ -14,12 +14,13 @@ class Role:
         total: Integer of total score for current hand of blackjack.
     """
 
-    def __init__(self, hand: View = None):
+    def __init__(self, hand: View = None, name: str = None):
         """Set up the role, with an optional hand attribute"""
         # Set the total before the hand, because the hand can change the total
         self.total = None
         self._hand = None
         self.hand = hand
+        self.name = name
 
     @property
     # pylint: disable=missing-docstring
@@ -57,6 +58,9 @@ class Dealer(Role):
     a simple implementation of Role.
     """
 
+    def __init__(self, hand: View = None):
+        super().__init__(hand=hand, name="Dealer")
+
     def play(self, deck: Deck):
         """Follow the strict rules of how a dealer is supposed to play
         blackjack. This includes unhiding the second card in the hand
@@ -76,9 +80,11 @@ class Player(Role):
     and stores the bet that the player made
     """
 
-    def __init__(self, hand: View = None, bank: int = None, bet: int = None):
-        """Store the bank roll, current bet, and moves of the player"""
-        super().__init__(hand=hand)
+    def __init__(
+        self, hand: View = None, name: str = None, bank: int = None, bet: int = None
+    ):
+        """Store the name, bank roll, current bet, and moves of the player"""
+        super().__init__(hand=hand, name=name)
         self.bank = bank
         self.bet = bet
         self.moves = {0: "hit", 1: "stay"}

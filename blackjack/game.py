@@ -46,7 +46,7 @@ class Blackjack:
             bet_checks = self.bet_checks.copy()
             while True:
                 try:
-                    user_bet = int(input(f"Place bet (bank = ${player.bank}): "))
+                    user_bet = int(input(f"Place bet for {player.name} (bank = ${player.bank}): "))
                 except ValueError:
                     print("Numbers only please :-)")
                     continue
@@ -82,31 +82,28 @@ class Blackjack:
         self.deal()
 
         for role in self.players + [self.dealer]:
-            role_name = role.__class__.__name__
-            print(f"{role_name}'s hand:")
+            print(f"{role.name}'s hand:")
             print(role.hand)
 
         for role in self.players + [self.dealer]:
-            role_name = role.__class__.__name__
-            print(f"Begin {role_name}'s turn")
+            print(f"Begin {role.name}'s turn")
             role.play(deck=self.deck)
-            print(f"{role_name} final hand:")
+            print(f"{role.name}'s' final hand:")
             print(role.hand)
 
-        for num, player in enumerate(self.players):
-            player_num = f"Player {num + 1}"
+        for player in self.players:
             if player.total > 21:
                 player.bank -= player.bet
-                print(f"{player_num} busts 💥")
+                print(f"{player.name} busts 💥")
             elif self.dealer.total > 21:
                 player.bank += player.bet
-                print(f"{player_num} wins 💰")
+                print(f"{player.name} wins 💰")
             elif player.total < self.dealer.total:
                 player.bank -= player.bet
-                print(f"{player_num} loses 😭")
+                print(f"{player.name} loses 😭")
             elif player.total > self.dealer.total:
                 player.bank += player.bet
-                print(f"{player_num} wins 💰")
+                print(f"{player.name} wins 💰")
             else:
-                print(f"{player_num} pushes ➡️")
+                print(f"{player.name} pushes ➡️")
 
