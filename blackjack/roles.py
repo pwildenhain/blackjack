@@ -108,6 +108,7 @@ class Player(Role):
         their move and calculate and new hand total. Keep asking for
         a move until bust or blackjack
         """
+        print(self.hand)
         if self.total == 21:
             return None
         keep_playing = self.choose_move() == "hit"
