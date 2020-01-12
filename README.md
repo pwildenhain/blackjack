@@ -3,9 +3,9 @@
 [![CircleCI](https://circleci.com/gh/pwildenhain/blackjack.svg?style=shield)](https://circleci.com/gh/pwildenhain/blackjack)
 [![codecov](https://codecov.io/gh/pwildenhain/blackjack/branch/master/graph/badge.svg)](https://codecov.io/gh/pwildenhain/blackjack)
 
-A blackjack game in the terminal
+A :spades: blackjack :spades: game in the terminal
 
-![](_static/game_screenshot.png)
+![](_static/capture.gif)
 
 ## Installation
 
